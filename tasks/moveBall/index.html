@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #field {
+      width: 200px;
+      height: 150px;
+      border: 10px solid black;
+      background-color: #00FF00;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body style="height:2000px">
+
+  Click on a field to move the ball there.
+  <br> The ball should never leave the field.
+
+
+  <div id="field">
+    <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  </div>
+
+  <script>
+    function getCoords(elem) {
+      let box = elem.getBoundingClientRect();
+
+      return {
+        top: box.top + window.pageYOffset,
+        left: box.left + window.pageXOffset,
+        bottom: box.bottom + window.pageYOffset,
+        right: box.right + window.pageXOffset,
+      }
+    }
+
+
+    let ball = document.getElementById('ball');
+    ball.style.cssText = 'position: absolute; transition: top 1s, left 1s;';
+
+    let ballCoords = getCoords(ball);
+    ball.style.top = ballCoords.top + 'px';
+    ball.style.left = ballCoords.left + 'px';
+
+    let field = document.getElementById('field');
+
+
+    let handler = function (event) {
+      let yClick = event.pageY;
+      let xClick = event.pageX;
+      fieldCoords = getCoords(field);
+
+      let yBall = yClick;
+      let xBall = xClick;
+      let halfBall = ball.offsetWidth/2;
+
+      let topRect = fieldCoords.top + field.clientTop;
+      let topEdge = topRect + halfBall;
+      let bottomEdge = topRect + field.clientHeight - halfBall;
+
+      let leftRect = fieldCoords.left + field.clientLeft;
+      let leftEdge = leftRect + halfBall;
+      let rightEdge = leftRect + field.clientWidth - halfBall;
+
+      if (yClick < topEdge) {
+        yBall = topEdge;
+      } else if (yClick > bottomEdge) {
+        yBall = bottomEdge;
+      }
+
+      if (xClick < leftEdge) {
+        xBall = leftEdge;
+      } else if (xClick > rightEdge) {
+        xBall = rightEdge;
+      }
+
+      ball.style.top = yBall - halfBall + 'px';
+      ball.style.left = xBall - halfBall + 'px'; 
+      
+    }
+
+    field.addEventListener('click', handler);
+  </script>
+
+
+</body>
+</html>

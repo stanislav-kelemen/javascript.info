@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<div id="container"></div>
+
+<script>
+'use strict';
+
+let data = {
+  "Fish": {
+    "trout": {},
+    "salmon": {}
+  },
+
+  "Tree": {
+    "Huge": {
+      "sequoia": {},
+      "oak": {}
+    },
+    "Flowering": {
+      "apple tree": {},
+      "magnolia": {}
+    }
+  }
+};
+
+// function createTree(container, data) {
+//   let props = Object.keys(data);
+
+//   if (!props.length) return;
+
+//   let ul = document.createElement('ul');
+//   container.append(ul);
+
+//   for (let prop of props) {
+//     let li = document.createElement('li');
+//     li.textContent = prop;
+
+//     ul.append(li);
+
+//     createTree(li, data[prop]);
+//   }
+
+//   return ul;
+  
+//  }
+
+function  createTree(container, data) {
+  container.innerHTML =  createTreeInner(data, false);
+}
+
+function createTreeInner(data, container) {
+  let props = Object.keys(data);
+
+  if (!props.length) return '<li>' + container + '</li>';
+
+  let inner = '';
+  for (let prop of props) {
+    inner += createTreeInner(data[prop], prop);;   
+  }
+
+  if (container) {
+    return `<li>${container}<ul>${inner}</ul></li>`;
+  }
+
+  return '<ul>' + inner + '</ul>';
+
+}
+
+let container = document.getElementById('container');
+createTree(container, data); // creates the tree in the container
+console.log(container.innerHTML);
+
+
+
+</script>
+
+</body>
+</html>

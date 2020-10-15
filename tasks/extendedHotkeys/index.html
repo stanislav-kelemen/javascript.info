@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function runOnKeys(func, ...codes) {
+            let pressed = new Set();
+
+            document.addEventListener('keydown', function (event) {
+                pressed.add(event.code);
+
+                for (const item of codes)
+                    if (!pressed.has(item)) return;
+
+                func();
+                pressed.clear();
+            });
+
+            document.addEventListener('keyup', event => pressed.delete(event.code));   
+        }
+
+        runOnKeys(
+            () => alert("Hello!"),
+            "KeyQ",
+            "KeyW"
+        );
+
+        runOnKeys(
+            () => alert("Пуккакпісь!"),
+            "KeyA",
+            "KeyS",
+            "KeyD",
+            "KeyF",
+            "KeyG",
+        );
+    </script>
+</body>
+</html>

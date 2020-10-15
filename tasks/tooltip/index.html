@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        height: 2000px;
+        /* make body scrollable, the tooltip should work after the scroll */
+      }
+
+      .tooltip {
+        /* some styles for the tooltip, you can use your own instead */
+        position: absolute;
+        padding: 10px 20px;
+        border: 1px solid #b3c9ce;
+        border-radius: 4px;
+        text-align: center;
+        font: italic 14px/1.3 sans-serif;
+        color: #333;
+        background: #fff;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa</p>
+    <p>LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa LaLaLa</p>
+
+    <button data-tooltip="the tooltip is longer than the element">
+      Short button
+    </button>
+    <button data-tooltip="HTML<br>tooltip">One more button</button>
+
+    <p>
+      Scroll the page to make buttons appear on the top, check if the tooltips
+      show up correctly.
+    </p>
+
+    <script>
+      function getRelativeCoords (elem) {
+        let box = elem.getBoundingClientRect();
+
+        return {
+          top: box.top + window.pageYOffset, 
+          left: box.left + window.pageXOffset,
+          bottom: box.bottom + window.pageYOffset,
+          right: box.right + window.pageXOffset,
+        }
+      }
+
+      let tooltip = document.createElement('div');
+      tooltip.classList.add('tooltip');
+      tooltip.style.display = 'none';
+
+      document.body.append(tooltip);
+
+      document.onmouseover = function(e) {
+        
+        if (e.target.tagName != 'BUTTON') return;
+        
+        let btn = e.target;
+        
+        tooltip.style.display = '';
+        tooltip.innerHTML = btn.dataset.tooltip;
+
+        let btnCoords = getRelativeCoords(btn);
+
+        console.log(btnCoords.left, btnCoords.top);
+
+        let ttX = btnCoords.left + btn.offsetWidth/2 - tooltip.offsetWidth/2;
+        let ttY = btnCoords.top - 5 - tooltip.offsetHeight;
+
+        console.log(ttX, ttY);
+        
+        tooltip.style.left = (window.pageXOffset > ttX) ? 0 : ttX + 'px';
+        tooltip.style.top = (window.pageYOffset > ttY) ? btnCoords.bottom + 5 + 'px': ttY + 'px';
+        
+        console.log(tooltip.style.left, tooltip.style.top);
+        
+      }
+
+      document.onmouseout = function(e) {
+        if (e.target.tagName != 'BUTTON') return;
+        tooltip.style.display = 'none';
+      }
+    </script>
+  </body>
+</html>

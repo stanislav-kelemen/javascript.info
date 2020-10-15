@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<h1>Click the button below</h1>
+<button id="actionButton">Click to show the from</button>
+
+<div id="prompt-form-container" hidden>
+    <form id="prompt-form">
+        <div id="prompt-message">Enter something...
+            <br>Please..
+        </div>
+        <input name="text" type="text">
+        <input type="submit" value="Ok">
+        <input type="button" name="cancel" value="Cancel">
+    </form>
+</div>
+
+<script>
+    let formContainer = document.getElementById('prompt-form-container');
+
+    let button = document.getElementById('actionButton');
+
+    button.onclick = function () {
+        return showPrompt('Enter something<br>...smart :)', function (value) {
+            alert('You entered: ' + value);
+        });
+    }
+
+    function showPrompt(html, callback) {
+        let promptMessage = document.getElementById('prompt-message');
+        promptMessage.innerHTML = html;
+
+        formContainer.hidden = false;
+        document.body.style.overflow = 'hidden';
+
+        let form = document.getElementById('prompt-form');
+        form.text.focus();
+
+
+        function complete(value) {
+            formContainer.hidden = true;
+            document.onkeydown = null;
+            document.body.style.overflow = '';
+
+            callback(value);
+        }
+
+
+        document.onkeydown = function (e) {
+            if (e.code === 'Escape') complete(null)
+        };
+
+        form.onsubmit = function () {
+            let value = form.text.value;
+            if (value === '') return false;
+
+            complete(value);
+        };
+
+        form.cancel.onclick = () => complete(null);
+
+
+        let firstElem = form.elements[0];
+        let lastElem = form.elements[form.elements.length - 1];
+
+        firstElem.onkeydown = function (e) {
+            if (e.code === 'Tab' && e.shiftKey) {
+                lastElem.focus();
+                return false;
+            }
+        }
+
+        lastElem.onkeydown = function (e) {
+            if (e.code === 'Tab' && !e.shiftKey) {
+                firstElem.focus();
+                return false;
+            }
+        }
+    }
+</script>
+
+</body>
+
+</html>

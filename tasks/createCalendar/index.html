@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      border: 1px solid black;
+      padding: 3px;
+      text-align: center;
+    }
+
+    th {
+      font-weight: bold;
+      background-color: #E6E6E6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="calendar"></div>
+
+  <script>
+    function createCalendar(elem, year, month) {
+    	month--;    	
+    	let date = new Date(year, month, 1);
+
+    	let days = ['MO','TU','WE','TH','FR','SA','SU'];
+    	let table = document.createElement("table");
+    	let trHeader = document.createElement("tr");
+
+    	table.append(trHeader);
+    	calendar.append(table);
+
+    	for (day of days) {
+    		 trHeader.innerHTML += `<th>${day}</th>`;
+    	}
+
+      while (date.getMonth() == month) {
+      	let trWeeks = document.createElement("tr");
+      	table.append(trWeeks);
+
+      	for (j = 0; j < 7; j++) {
+      		let td = document.createElement("td");
+      		trWeeks.append(td);
+
+      		if (date.getMonth() != month) {
+      			continue;
+      		}
+
+      		let today = date.getDate();
+      		let dayOfWeek = date.getDay();
+
+      		if ((dayOfWeek == 0 && j == 6)
+      				|| dayOfWeek - 1 == j) { 
+      				// 0 == SU in JS, 0 == MO in table
+      			td.innerHTML = today;
+      			date.setDate(today + 1);
+      		}
+	      }
+	    }
+    }
+
+    createCalendar(calendar, 2012, 9);
+  </script>
+
+</body>
+</html>

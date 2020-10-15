@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        #mouse {
+            display: inline-block;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        #mouse:focus {
+            outline: 1px dashed black;
+        }
+    </style>
+</head>
+
+<body>
+
+<p>Click on the mouse and move it with arrow keys.</p>
+
+<pre id="mouse">
+ _   _
+(q\_/p)
+ /. .\
+=\_t_/=   __
+ /   \   (
+((   ))   )
+/\) (/\  /
+\  Y  /-'
+ nn^nn
+</pre>
+
+
+<script>
+    let mouse = document.getElementById("mouse");
+
+    mouse.tabIndex = 0;
+    mouse.style.position = 'absolute';
+
+    mouse.onkeydown = function (event) {
+        let mouseCoords = mouse.getBoundingClientRect();
+        let newTop = mouseCoords.top;
+        let newLeft = mouseCoords.left;
+
+        switch (event.code) {
+            case 'ArrowUp':
+                newTop = mouseCoords.top - mouse.offsetHeight;
+                break;
+            case 'ArrowDown':
+                newTop = mouseCoords.bottom;
+                break;
+            case 'ArrowLeft':
+                newLeft = mouseCoords.left - mouse.offsetWidth;
+                break;
+            case 'ArrowRight':
+                newLeft = mouseCoords.right;
+                break;
+            default:
+                return;
+        }
+
+        mouse.style.top = newTop + 'px';
+        mouse.style.left = newLeft + 'px';
+    }
+</script>
+
+</body>
+
+</html>

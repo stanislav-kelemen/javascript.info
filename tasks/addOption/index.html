@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select id="genres">
+        <option value="rock">Rock</option>
+        <option value="blues" selected>Blues</option>
+    </select>
+
+    <script>
+        let select = document.getElementById('genres');
+        let options = select.options;
+        let selectedOption = options[select.selectedIndex];
+
+        console.log(select.value, selectedOption.text);
+        selectedOption.removeAttribute('selected', false);
+        selectedOption.selected = false;
+        
+        let option = new Option('Classic', 'classic', true, true);
+        select.options.add(option);
+        console.log(select.value);
+    </script>
+</body>
+</html>

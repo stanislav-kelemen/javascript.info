@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<style>
+		
+	</style>	
+</head>
+<body>
+
+	<div></div>
+
+	<script>
+		'use strict';
+
+		let intervalID;
+		let time = new Date(Date.now());
+
+		function clockStart() {
+			intervalID = setInterval(() => {
+				time.setSeconds(time.getSeconds() + 1);
+				
+				document.body.firstElementChild.innerHTML = 
+					`<span style="color: red">${time.getHours()}</span>:` +
+					`<span style="color: green">${time.getMinutes()}</span>:` +
+					`<span style="color: blue">${time.getSeconds()}</span>`
+				}, 1000);
+		}
+
+		function clockStop() {
+			clearInterval(intervalID);
+		}
+	</script>
+
+  <!-- click on this button calls clockStart() -->
+  <input type="button" onclick="clockStart()" value="Start">
+
+  <!-- click on this button calls clockStop() -->
+  <input type="button" onclick="clockStop()" value="Stop">
+
+
+	
+
+</body>
+</html>

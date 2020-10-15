@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    .tree span {
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .tree span:hover {
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+
+  <ul class="tree" id="tree">
+    <li>Animals
+      <ul>
+        <li>Mammals
+          <ul>
+            <li>Cows</li>
+            <li>Donkeys</li>
+            <li>Dogs</li>
+            <li>Tigers</li>
+          </ul>
+        </li>
+        <li>Other
+          <ul>
+            <li>Snakes</li>
+            <li>Birds</li>
+            <li>Lizards</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Fishes
+      <ul>
+        <li>Aquarium
+          <ul>
+            <li>Guppy</li>
+            <li>Angelfish</li>
+          </ul>
+        </li>
+        <li>Sea
+          <ul>
+            <li>Sea trout</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <script>
+    for (const li of document.querySelectorAll('.tree li')) {
+      let span = document.createElement('span');
+      li.prepend(span);
+      span.append(span.nextSibling);
+    }
+    
+    tree = document.getElementById('tree').onclick = function (event) {
+      if (event.target.tagName != 'SPAN') return;
+
+      let childList = event.target.parentElement.querySelectorAll('ul, li');
+      if (!childList) return;
+      
+      for (const child of childList) {
+        child.hidden = !child.hidden;
+      }
+    }
+  </script>
+
+</body>
+</html>

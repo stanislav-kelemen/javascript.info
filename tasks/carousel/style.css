@@ -1,0 +1,60 @@
+.carousel {
+  position: relative;
+  width: 490px;
+  height: 130px;
+  border: 1px solid #CCCCCC;
+  background-color: #EEEEEE;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.arrow {
+  padding: 0;
+  background: #ddd;
+  border-radius: 15px;
+  border: 1px solid gray;
+  font-size: 24px;
+  line-height: 24px;
+  color: #444;
+  display: block;
+  position: absolute;
+  top: 50px;
+}
+
+.arrow:focus {
+  outline: none;
+}
+
+.arrow:hover {
+  background: #ccc;
+  cursor: pointer;
+}
+
+.gallery {
+  overflow: hidden;
+  display: block;
+  width: 390px;
+  margin: 0 auto;
+}
+
+ul {
+  height: 130px;
+  width: 9999px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0;
+  display: block;
+  overflow: hidden;
+  transition: margin-left 250ms;
+}
+
+ul img {
+  width: 130px;
+  height: 130px;
+  display: block; /* removes extra space near images */
+}
+
+ul li {
+  display: inline-block; /* removes extra space between list items */
+}
